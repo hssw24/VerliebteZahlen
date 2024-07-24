@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verliebte Zahlen Übung</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Verliebte Zahlen</h1>
+        <div id="menu">
+            <button onclick="startExercise(1)">20 Aufgaben</button>
+            <button onclick="startExercise(2)">90 Sekunden</button>
+        </div>
+        <div id="exercise" style="display: none;">
+            <div id="timer"></div>
+            <div id="question"></div>
+            <div id="answers"></div>
+            <button onclick="nextQuestion()">Nächste Frage</button>
+        </div>
+        <div id="result" style="display: none;">
+            <h2>Ergebnis</h2>
+            <div id="resultMessage"></div>
+            <button onclick="reset()">Noch eine Übung</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
