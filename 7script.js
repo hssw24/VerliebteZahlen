@@ -1,3 +1,4 @@
+//Version mit wchselnden Antwortbuttons - schwerere Variante!
 let pairs = [
     [0, 10], [1, 9], [2, 8], [3, 7], [4, 6], [5, 5], [6, 4], [7, 3], [8, 2], [9, 1], [10, 0]
 ];
@@ -60,8 +61,13 @@ function nextQuestion(isInitial) {
     document.getElementById('question').innerText = `Welches ist das verliebte Zahl-Paar von ${pair[0]}?`;
     
     let answersHtml = '';
-    for (let i = 10; i >= 0; i--) {
-        answersHtml += `<button onclick="checkAnswer(this, ${i}, ${correctAnswer})">${i}</button>`;
+    let usedAnswers = new Set();
+    while (usedAnswers.size < 11) { // 11 buttons for answers 0 to 10
+        let randomAnswer = Math.floor(Math.random() * 11);
+        if (!usedAnswers.has(randomAnswer)) {
+            answersHtml += `<button onclick="checkAnswer(this, ${randomAnswer}, ${correctAnswer})">${randomAnswer}</button>`;
+            usedAnswers.add(randomAnswer);
+        }
     }
 
     document.getElementById('answers').innerHTML = answersHtml;

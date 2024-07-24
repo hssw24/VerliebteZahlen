@@ -1,12 +1,11 @@
 let pairs = [
-    [0, 10], [1, 9], [2, 8], [3, 7], [4, 6], [5, 5], [6, 4], [7, 3], [8, 2], [9, 1], [10, 0]
+    [0, 10], [1, 9], [2, 8], [3, 7], [4, 6], [5, 5]
 ];
 
 let currentMode = 0;
 let currentQuestion = 0;
 let correctAnswers = 0;
 let wrongAnswers = 0;
-let lastPairIndex = -1;
 let startTime;
 let timerInterval;
 
@@ -15,7 +14,6 @@ function startExercise(mode) {
     currentQuestion = 0;
     correctAnswers = 0;
     wrongAnswers = 0;
-    lastPairIndex = -1;
     document.getElementById('menu').style.display = 'none';
     document.getElementById('exercise').style.display = 'block';
     
@@ -49,19 +47,22 @@ function nextQuestion(isInitial) {
         wrongAnswers++;
     }
     
-    let pairIndex;
-    do {
-        pairIndex = Math.floor(Math.random() * pairs.length);
-    } while (pairIndex === lastPairIndex);
-
-    lastPairIndex = pairIndex;
-    let pair = pairs[pairIndex];
+    let pair = pairs[Math.floor(Math.random() * pairs.length)];
     let correctAnswer = pair[1];
     document.getElementById('question').innerText = `Welches ist das verliebte Zahl-Paar von ${pair[0]}?`;
     
     let answersHtml = '';
-    for (let i = 10; i >= 0; i--) {
-        answersHtml += `<button onclick="checkAnswer(this, ${i}, ${correctAnswer})">${i}</button>`;
+    pairs.forEach(p => {
+        answersHtml += `<button onclick="checkAnswer(this, ${p[1]}, ${correctAnswer})">${p[1]}</button>`;
+    });
+
+    // Add additional buttons to make a total of 10
+    let additionalAnswers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    while (answersHtml.split('</button>').length - 1 < 10) {
+        let randomAnswer = additionalAnswers[Math.floor(Math.random() * additionalAnswers.length)];
+        if (!answersHtml.includes(`>${randomAnswer}<`)) {
+            answersHtml += `<button onclick="checkAnswer(this, ${randomAnswer}, ${correctAnswer})">${randomAnswer}</button>`;
+        }
     }
 
     document.getElementById('answers').innerHTML = answersHtml;

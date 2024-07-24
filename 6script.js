@@ -60,8 +60,13 @@ function nextQuestion(isInitial) {
     document.getElementById('question').innerText = `Welches ist das verliebte Zahl-Paar von ${pair[0]}?`;
     
     let answersHtml = '';
-    for (let i = 10; i >= 0; i--) {
-        answersHtml += `<button onclick="checkAnswer(this, ${i}, ${correctAnswer})">${i}</button>`;
+    let usedAnswers = new Set();
+    while (usedAnswers.size < 10) {
+        let randomAnswer = Math.floor(Math.random() * 11);
+        if (!usedAnswers.has(randomAnswer)) {
+            answersHtml += `<button onclick="checkAnswer(this, ${randomAnswer}, ${correctAnswer})">${randomAnswer}</button>`;
+            usedAnswers.add(randomAnswer);
+        }
     }
 
     document.getElementById('answers').innerHTML = answersHtml;
